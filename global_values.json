@@ -1,0 +1,18 @@
+{
+    "control-plane-deployent": {
+        "sandbox": [
+            "sbx-i01-aws-us-east-1"
+        ],
+        "production": [
+            "prod-i01-aws-us-east-1"
+        ]
+    },
+    "kubernetes-version": "1.24",
+    "istio-version": "1.17.2",
+    "cluster-autoscaler-version": "1",
+    "efs-csi-version": "2",
+    "metrics-server-version": "3",
+    "kube-state-metrics-version": "4",
+    "cert-manager-version": "5",
+    "external-dns-version": "6"
+}
