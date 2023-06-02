@@ -1,0 +1,40 @@
+---
+version: 2.1
+
+orbs:
+  op: twdps/onepassword@1.0.0
+  do: twdps/pipeline-events@1.0.0
+
+# ============================================================ pipeline globals
+
+globals:
+  - &context empc-lab
+  - &executor-image twdps/circleci-infra-aws:alpine-4.11.0
+
+on-push-main: &on-push-main
+  branches:
+    only: /main/
+  tags:
+    ignore: /.*/
+
+# ============================================================ commands and jobs
+
+jobs:
+
+  write-global-values-to-op:
+    docker:
+      - image: *executor-image
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          command: exit 1
+
+# ============================================================ workflows
+
+workflows:
+  version: 2
+
+  platform global env values:
+    jobs:
+      - write-global-values-to-op
