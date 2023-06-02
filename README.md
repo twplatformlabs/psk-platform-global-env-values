@@ -16,3 +16,5 @@ Recall from the PSK foundational principles, _the desired state of the platform 
 ### development
 
 There is a single, global_values.json file that contains all of the present global key/value settings. The pipeline parses this json and updates the respective values within 1password in vault=empc-lab, secret=platform-global-config.  
+
+See the [notes](notes.md) for additional details for each global value.  
