@@ -28,7 +28,9 @@ jobs:
       - setup_remote_docker
       - run:
           name: write gobal values to empc-lab vault
-          command: bash scripts/write_key_values_to_op.sh
+          command: |
+            exit 1
+            bash scripts/write_key_values_to_op.sh
 
   recurring-drift-check:
     docker:
@@ -38,16 +40,14 @@ jobs:
       - setup_remote_docker
       - run:
           name: compare global_values with settings in op
-          command: |
-            exit 1
-            bash scripts/compare_op_with_desired_values.sh
+          command: bash scripts/compare_op_with_desired_values.sh
 
 # ============================================================ workflows
 
 workflows:
   version: 2
 
-  platform global env values:
+  write global values to op:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
@@ -56,15 +56,15 @@ workflows:
           context: *context
           filters: *on-push-main
 
-      - do/schedule-pipeline:
-          name: schedule nightly drift check
-          context: *context
-          scheduled-pipeline-name: nightly-drift-check
-          scheduled-pipeline-description: |
-            Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
-          hours-of-day: "[1]"
-          days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
-          filters: *on-push-main
+      # - do/schedule-pipeline:
+      #     name: schedule nightly drift check
+      #     context: *context
+      #     scheduled-pipeline-name: nightly-drift-check
+      #     scheduled-pipeline-description: |
+      #       Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
+      #     hours-of-day: "[1]"
+      #     days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
+      #     filters: *on-push-main
 
   nightly drift check:
     when:
