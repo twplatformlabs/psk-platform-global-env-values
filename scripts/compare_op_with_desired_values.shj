@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# loop through global_values.json, write aech key/value pair to platform-global-config in empc-lab vault
+for key in $(jq -r 'keys_unsorted[]' global_values.json); do
+    echo "compare $key from global_values file with current value in empc-lab vault platform-global-config"
+    if [[ != $(op read op://empc-lab/platform-global-config/$key)]]
+done

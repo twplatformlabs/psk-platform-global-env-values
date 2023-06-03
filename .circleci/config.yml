@@ -2,7 +2,6 @@
 version: 2.1
 
 orbs:
-  op: twdps/onepassword@1.0.0
   do: twdps/pipeline-events@1.0.0
 
 # ============================================================ pipeline globals
@@ -28,7 +27,20 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          command: exit 1
+          name: write gobal values to empc-lab vault
+          command: bash scripts/write_key_values_to_op.sh
+
+  recurring-drift-check:
+    docker:
+      - image: *executor-image
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: compare global_values with settings in op
+          command: |
+            exit 1
+            bash scripts/compare_op_with_desired_values.sh
 
 # ============================================================ workflows
 
@@ -36,5 +48,27 @@ workflows:
   version: 2
 
   platform global env values:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - write-global-values-to-op
+      - write-global-values-to-op:
+          context: *context
+          filters: *on-push-main
+
+      - do/schedule-pipeline:
+          name: schedule nightly drift check
+          context: *context
+          scheduled-pipeline-name: nightly-drift-check
+          scheduled-pipeline-description: |
+            Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
+          hours-of-day: "[1]"
+          days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
+          filters: *on-push-main
+
+  nightly drift check:
+    when:
+      equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - recurring-drift-check:
+          context: *context
