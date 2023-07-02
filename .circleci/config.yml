@@ -8,7 +8,7 @@ orbs:
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-infra-aws:alpine-stable
+  - &executor-image twdps/circleci-base-image:alpine-stable
 
 on-push-main: &on-push-main
   branches:
@@ -54,15 +54,15 @@ workflows:
           context: *context
           filters: *on-push-main
 
-      # - do/schedule-pipeline:
-      #     name: schedule nightly drift check
-      #     context: *context
-      #     scheduled-pipeline-name: nightly-drift-check
-      #     scheduled-pipeline-description: |
-      #       Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
-      #     hours-of-day: "[1]"
-      #     days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
-      #     filters: *on-push-main
+      - do/schedule-pipeline:
+          name: schedule nightly drift check
+          context: *context
+          scheduled-pipeline-name: nightly-drift-check
+          scheduled-pipeline-description: |
+            Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
+          hours-of-day: "[1]"
+          days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
+          filters: *on-push-main
 
   nightly drift check:
     when:
