@@ -63,8 +63,6 @@ workflows:
             Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
           hours-of-day: "[1]"
           days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
-          before-release:
-            - run:
           filters: *on-push-main
 
   nightly drift check:
