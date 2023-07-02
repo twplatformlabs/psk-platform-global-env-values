@@ -57,11 +57,14 @@ workflows:
       - do/schedule-pipeline:
           name: schedule nightly drift check
           context: *context
+          shell: op run --env-file op.env -- /bin/bash -eo pipefail
           scheduled-pipeline-name: nightly-drift-check
           scheduled-pipeline-description: |
             Nightly, automated comparison of desired values with values in op. Difference indicates changes made directly in op.
           hours-of-day: "[1]"
           days-of-week: "[\"SUN\", \"MON\",\"TUE\",\"WED\",\"THU\"]"
+          before-release:
+            - run:
           filters: *on-push-main
 
   nightly drift check:
