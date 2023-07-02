@@ -8,7 +8,7 @@ orbs:
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-infra-aws:alpine-4.11.0
+  - &executor-image twdps/circleci-infra-aws:alpine-stable
 
 on-push-main: &on-push-main
   branches:
@@ -28,9 +28,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: write gobal values to empc-lab vault
-          command: |
-            exit 1
-            bash scripts/write_key_values_to_op.sh
+          command: bash scripts/write_key_values_to_op.sh
 
   recurring-drift-check:
     docker:
@@ -47,7 +45,7 @@ jobs:
 workflows:
   version: 2
 
-  write global values to op:
+  store global values in vault:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]

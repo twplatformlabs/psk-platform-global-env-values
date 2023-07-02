@@ -11,9 +11,9 @@
 
 #### control-plane-deployent
 
-Defines roles and related instances of platform vpcs/cluster/etc.  
+Defines roles and related instances for the global deployment of control-plane resources. The empc lab maintains a very small footprint and normally at such a small scale use of the scaled-environment practices is not warrented. The lab has only two roles and only a single instance of the control-plane per role. We are using the workflow logic of a larger deployment just for demonstration purposes.  
 
-The path to production for an engineering platform product will typically have the following stages:
+In a larger enterprise setting the path to production for an engineering platform will typically have the following stages:
 
 **sandbox**  :  this represents the non-customer facing instances of the platform, used by the EP product team to develop and test the features of the engineering platform. All such additions, along with upgrades, patches, etc for existing components are first deployed and tested in Sandbox instances of the platform.  
 
@@ -78,11 +78,3 @@ So continuing with the example of six regions, the control-plane-deployment valu
 }
 ```
 Using this config, you can trigger a sandbox deployment pipeline on git-push and a platform deployment pipeline on git-tag, and the `generated` pipeline would know that deploying to "preview" means concurrently deploying to all the locations listed. Likewise, upon successful completion, either with a manual approval or automatically, the pipeline would then go on to deploy to all six locations in "nonprod" and so on. (In this PSK build, only a single sandbox instance and prod instance is defined.)
-
-#### versions
-
-While a relase of a version upgrade will follow the above deployment path, nonetheless the desired version of cluster-level third-party packages is a uniform state requirement.  
-
-Ex:  
-
-When upgrading from version 1.23 of kubernetes to 1.24, after updating this global_value to the new version, triggering the related deployment pipelines will result (upon successful completion) in the new version being adopted.  
