@@ -13,7 +13,7 @@
             "release": {
                 "filter": "*on-tag-main",
                 "prod": {
-                    "prod-i01-aws-us-east-1": {
+                    "prod-i01-aws-us-east-2": {
                         "aws_region": "us-east-2"
                     }
                 }
