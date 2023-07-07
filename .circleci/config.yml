@@ -8,7 +8,7 @@ orbs:
 
 globals:
   - &context empc-lab
-  - &executor-image twdps/circleci-base-image:alpine-stable
+  - &executor-image twdps/circleci-infra-aws:alpine-stable
 
 on-push-main: &on-push-main
   branches:
