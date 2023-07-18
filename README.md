@@ -7,7 +7,9 @@
 	</p>
 </div>
 
-As an engineering platform scales, certain environment settings take on the attributes of a globally shared value. In a sense, one can see this immediately in the case of service account credentials. These are created and stored in a generally available secrets service rather than duplicated in the multiple places where needed. Other settings that can easily be managed within a single domain pipeline are better accessed from a generally available key/value store as more of the platform becomes dynamic in scale.  
+As an engineering platform scales, certain environment settings take on the attributes of a globally shared value. In a sense, one can see this immediately in the case of service account credentials. These are created and stored in a generally available secrets store rather than duplicated in the multiple places where needed. Other settings that can easily be managed within a single domain pipeline are better accessed from a generally available key/value store as more of the platform becomes dynamic in scale.  
+
+An example of such scale occurs when the definition of `Production`
 
 Where you have access from the start to a SaaS-based, secure k/v store (such as 1password used by this Platform Starter Kit example) such a service can readily serve for both secure and non-secure values.  
 
