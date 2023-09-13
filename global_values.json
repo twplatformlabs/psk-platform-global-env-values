@@ -4,17 +4,38 @@
         "control-plane-deployment": {
             "sandbox": {
                 "filter": "*on-push-main",
-                "sbx-dev": {
-                    "sbx-i01-aws-us-east-1": {
-                        "aws_region": "us-east-1"
+                "deploy": [
+                    "sbxdev"
+                ],
+                "roles": {
+                    "sbxdev": {
+                        "deploy": [
+                            "sbx-i01-aws-us-east-1"
+                        ],
+                        "instances": {
+                            "sbx-i01-aws-us-east-1": {
+                                "aws_region": "us-east-1",
+                                "aws_account_id": "090950721693"
+                            }
+                        }
                     }
                 }
             },
             "release": {
                 "filter": "*on-tag-main",
-                "prod": {
-                    "prod-i01-aws-us-east-2": {
-                        "aws_region": "us-east-2"
+                "deploy": [
+                    "prod"
+                ],
+                "roles": {
+                    "prod": {
+                        "deploy": [
+                            "prod-i01-aws-us-east-2"
+                        ],
+                        "instances": {
+                            "prod-i01-aws-us-east-2": {
+                                "aws_region": "us-east-2"
+                            }
+                        }
                     }
                 }
             }
