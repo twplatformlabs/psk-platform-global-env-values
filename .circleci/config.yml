@@ -2,12 +2,10 @@
 version: 2.1
 
 orbs:
-  do: twdps/pipeline-events@1.0.0
-
-# ============================================================ pipeline globals
+  do: twdps/pipeline-events@5.0.1
 
 globals:
-  - &context empc-lab
+  - &context platform
   - &executor-image twdps/circleci-infra-aws:alpine-stable
 
 on-push-main: &on-push-main
@@ -15,8 +13,6 @@ on-push-main: &on-push-main
     only: /main/
   tags:
     ignore: /.*/
-
-# ============================================================ commands and jobs
 
 jobs:
 
@@ -27,7 +23,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
-          name: write gobal values to empc-lab vault
+          name: write gobal values to platform vault
           command: bash scripts/write_key_values_to_op.sh
 
   recurring-drift-check:
@@ -39,8 +35,6 @@ jobs:
       - run:
           name: compare global_values with settings in op
           command: bash scripts/compare_op_with_desired_values.sh
-
-# ============================================================ workflows
 
 workflows:
   version: 2

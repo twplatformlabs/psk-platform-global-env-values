@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export GLOBAL_VALUES=global_values.json
-export VAULT=empc-lab
+export VAULT=platform
 
 # loop through global_values.json, write the defined fields to the associated secret
 for key in $(jq -r 'keys_unsorted[]' $GLOBAL_VALUES); do
